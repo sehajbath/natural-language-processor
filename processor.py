@@ -1,4 +1,13 @@
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
 import twitter
+import re
+from nltk import NaiveBayesClassifier
+from nltk.tokenize import word_tokenize
+from string import punctuation
+from nltk.corpus import stopwords
+
 
 # initialize api instance
 twitter_api = twitter.Api(consumer_key="MpaHD8Njtwld5vIRuP9kYL9VU",
@@ -34,7 +43,7 @@ def buildTrainingSet(corpusFile, tweetDataFile):
 
     corpus = []
 
-    with open(corpusFile, 'rb') as csvfile:
+    with open(corpusFile, 'rt') as csvfile:
         lineReader = csv.reader(csvfile, delimiter=',', quotechar="\"")
         for row in lineReader:
             corpus.append({"tweet_id": row[2], "label": row[1], "topic": row[0]})
@@ -65,15 +74,10 @@ def buildTrainingSet(corpusFile, tweetDataFile):
 
 # Set file path for Training Set as corpusFile and file path you want to save tweet data to
 # to tweetDataFile.
-corpusFile = "FILE_PATH/corpus.csv"
-tweetDataFile = "FILE_PATH/tweetDataFile.csv"
+corpusFile = "corpus.csv"
+tweetDataFile = "tweetDataFile.csv"
 
 trainingData = buildTrainingSet(corpusFile, tweetDataFile)
-
-import re
-from nltk.tokenize import word_tokenize
-from string import punctuation
-from nltk.corpus import stopwords
 
 
 class PreProcessTweets:
