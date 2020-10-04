@@ -63,7 +63,7 @@ def buildTrainingSet(corpusFile, tweetDataFile):
         except:
             continue
     # now we write them to the empty CSV file
-    with open(tweetDataFile, 'wb') as csvfile:
+    with open(tweetDataFile, 'wt') as csvfile:
         linewriter = csv.writer(csvfile, delimiter=',', quotechar="\"")
         for tweet in trainingDataSet:
             try:
